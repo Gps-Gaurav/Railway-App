@@ -5,7 +5,7 @@ export interface IStation {
 }
 
 
-export class  IStation {
+export class  Search {
   fromStationId : number;
   toStationId : number;
   dataOfTravel : string;
@@ -17,4 +17,17 @@ export class  IStation {
   }
 
 
+}
+
+export interface ITrain{
+  trainId : number;
+  trainNo: number;
+  trainName: string;
+  departureStationName: string;
+  arrivalStationName: string;
+  arrivalTime: string;
+  departureTime: string;
+  totalSeats: number;
+  departureDate: string;
+  bookedSeats: number;
 }

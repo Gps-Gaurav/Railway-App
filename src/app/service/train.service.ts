@@ -11,4 +11,8 @@ export class TrainService {
   getAllStations(){
     return this.http.get(`${this.apiUrl}GetAllStations`)
   }
+  getTrainsSearch(from:number, to:number, date:string){
+    return this.http.get(`${this.apiUrl}
+https://freeapi.miniprojectideas.com/api/TrainApp/GetTrainsBetweenStations?departureStationId=${from}&arrivalStationId=${to}&departureDate=${date}`)
+  }
 }
