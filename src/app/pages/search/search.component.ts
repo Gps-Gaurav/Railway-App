@@ -16,8 +16,14 @@ export class SearchComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   trainService = inject(TrainService);
   searchData: Search = new Search();
-  trainList:ITrain[]=[];
+  trainList: ITrain[] = [];
   stationList: IStation[] = [];
+  selectedTrain?: ITrain;
+  passenger: any = {
+    passengerName: '',
+    age: 0,
+  };
+  passengerList: any[] = [];
 
   constructor() {
     this.activatedRoute.params.subscribe((res: any) => {
@@ -32,16 +38,39 @@ export class SearchComponent implements OnInit {
     this.loadAllStation();
   }
 
-  getSearchTrains(){
-    this.trainService.getTrainsSearch(this.searchData.fromStationId, this.searchData.toStationId,this.searchData.dataOfTravel).subscribe((res:any)=>{
-      debugger;
-      this.trainList = res.data;
-    })
-}
+  getSearchTrains() {
+    this.trainService
+      .getTrainsSearch(
+        this.searchData.fromStationId,
+        this.searchData.toStationId,
+        this.searchData.dataOfTravel
+      )
+      .subscribe((res: any) => {
+        debugger;
+        this.trainList = res.data;
+      });
+  }
+  addPassenger() {
+    const strObj = JSON.stringify(this.passenger);
+    const parseObj = JSON.parse(strObj);
+    this.passengerList.push(this.passenger);
+  }
   loadAllStation() {
     this.trainService.getAllStations().subscribe((res: any) => {
       this.stationList = res.data;
     });
   }
+  open(train: ITrain) {
+    this.selectedTrain = train;
+    const model = document.getElementById('Bookmodel');
+    if (model != null) {
+      model.style.display = 'block';
+    }
+  }
+  close() {
+    const model = document.getElementById('Bookmodel');
+    if (model != null) {
+      model.style.display = 'none';
+    }
+  }
 }
-

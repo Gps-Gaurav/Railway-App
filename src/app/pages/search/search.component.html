@@ -47,7 +47,7 @@
                          {{item.arrivalTime}} | {{item.arrivalStationName}} | {{item.arrivalTime}}
                      </div>
                  </div>
-                 <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Book Now</button>
+                 <button class="btn btn-success btn-sm" (click)="open(item)">Book Now</button>
                  <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Check Availability</button>
              </div>
          </div>
@@ -78,7 +78,7 @@
  </div>
 </div>
 
-<div class="modal" id="myModal">
+<div class="modal" id="BookModal">
  <div class="modal-dialog">
    <div class="modal-content">
 
@@ -92,23 +92,23 @@
      <div class="modal-body">
          <div class="row">
              <div class="col-8 text-end">
-                 Train: Pune Express
+                 Train: {{selectedTrain?.trainName}} - {{selectedTrain?.trainNo}}
              </div>
              <div class="col-4 text-end">
-                 Time:14.30
+                 Time:{{selectedTrain?.departureTime}}
              </div>
          </div>
          <div class="row pt-1">
              <div class="col-6 mt-2">
                  <label for="">Passenger Name</label>
-                 <input type="text" class="form-control">
+                 <input type="text" [(ngModel)]="passenger.passengerName"  class="form-control">
              </div>
              <div class="col-3">
                  <label for="">Age</label>
-                 <input type="text" class="form-control">
+                 <input type="text" [(ngModel)]="passenger.age" class="form-control">
              </div>
              <div class="col-3  text-end pt-4">
-                 <button class="btn btn-sm btn-primary">Add</button>
+                 <button class="btn btn-sm btn-primary" (click)="addPassenger()">Add</button>
              </div>
          </div>
          <div class="row pt-1">
@@ -123,30 +123,16 @@
                          </tr>
                      </thead>
                      <tbody>
+                        @for (item of passengerList; track $index) {
                          <tr>
-                             <td>1</td>
-                             <td>Sachin</td>
-                             <td>34</td>
+                             <td>{{$index+1}}</td>
+                             <td>{{item.passengerName}}</td>
+                             <td>{{item.age}}</td>
                              <td>
                                  <button class="btn btn-danger btn-sm">Remove</button>
                              </td>
                          </tr>
-                         <tr>
-                             <td>2</td>
-                             <td>Rohit</td>
-                             <td>34</td>
-                             <td>
-                                 <button class="btn btn-danger btn-sm">Remove</button>
-                             </td>
-                         </tr>
-                         <tr>
-                             <td>3</td>
-                             <td>Rahul</td>
-                             <td>34</td>
-                             <td>
-                                 <button class="btn btn-danger btn-sm">Remove</button>
-                             </td>
-                         </tr>
+                        }
                      </tbody>
                  </table>
              </div>
