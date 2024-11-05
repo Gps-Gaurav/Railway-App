@@ -22,4 +22,7 @@ https://freeapi.miniprojectideas.com/api/TrainApp/GetTrainsBetweenStations?depar
   onLogin(obj:any){
     return this.http.post<APIResponse>(`${this.apiUrl}login`, obj)
   }
+  bookTrain(obj:any){
+    return this.http.post<APIResponse>(`${this.apiUrl}bookTrain`, obj)
+  }
 }

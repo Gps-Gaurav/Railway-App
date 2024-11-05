@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrainService } from '../../service/train.service';
-import { IStation, ITrain, Search } from '../../model/train';
+import { APIResponse, Customer, IStation, ITrain, Search } from '../../model/train';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -25,7 +25,13 @@ export class SearchComponent implements OnInit {
   };
   passengerList: any[] = [];
 
+  loggedUserData: Customer = new Customer();
   constructor() {
+    const localData = localStorage.getItem('TrainApp');
+    if(localData != null){
+    this.loggedUserData = JSON.parse(localData);
+  }
+
     this.activatedRoute.params.subscribe((res: any) => {
       debugger;
       this.searchData.fromStationId = res.fromStationId;
@@ -34,6 +40,7 @@ export class SearchComponent implements OnInit {
       this.getSearchTrains();
     });
   }
+
   ngOnInit(): void {
     this.loadAllStation();
   }
@@ -73,4 +80,25 @@ export class SearchComponent implements OnInit {
       model.style.display = 'none';
     }
   }
+  bookTicket() {
+ debugger;
+    const bookingObj={
+      "bookingId":0,
+      "trainId": this.selectedTrain?.trainId,
+      "passengerId":this.loggedUserData.passengerID,
+      "travelDate":this.searchData.dataOfTravel,
+      "bookingdate": new Date(),
+      "totalSeats":0,
+      "TrainAppBookingpassenger": [] as any
+    };
+    bookingObj.TrainAppBookingpassenger = this.passengerList;
+    bookingObj.totalSeats = this.passengerList.length;
+    this.trainService.bookTrain(bookingObj).subscribe((res:APIResponse)=>{
+      if(res.result){
+        alert ("ticket booked successfully")
+      }
+      else(res.message)
+    })
+  }
+
 }
