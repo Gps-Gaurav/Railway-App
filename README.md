@@ -5,6 +5,8 @@ firstly clone this web-app and run command
 1. npm install
 2. npm start
 3. open browser type url => http://localhost:4209/
+4. api used => https://freeapi.gerasim.in/
+5. choose TrainApp section
 
 ## Development server
 
